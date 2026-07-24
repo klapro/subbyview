@@ -3,16 +3,19 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SubtitleText } from '../components/SubtitleText';
 import { PlayPauseButton } from '../components/PlayPauseButton';
 import { ProgressBar } from '../components/ProgressBar';
-import { useFileImport } from '../hooks/useFileImport';
+import { ResyncControls } from '../components/ResyncControls';
+import { useSubtitleImport } from '../hooks/useSubtitleImport';
+import { usePlaybackClock } from '../hooks/usePlaybackClock';
 
 export function PlayerScreen() {
-  const { importMedia, importSubtitles } = useFileImport();
+  usePlaybackClock();
+  const { importSubtitles } = useSubtitleImport();
   const [error, setError] = useState<string | null>(null);
 
-  const runImport = async (fn: () => Promise<void>) => {
+  const handleChangeSubtitles = async () => {
     setError(null);
     try {
-      await fn();
+      await importSubtitles();
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -21,10 +24,7 @@ export function PlayerScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
-        <Pressable onPress={() => runImport(importMedia)}>
-          <Text style={styles.link}>Change media</Text>
-        </Pressable>
-        <Pressable onPress={() => runImport(importSubtitles)}>
+        <Pressable onPress={handleChangeSubtitles}>
           <Text style={styles.link}>Change subtitles</Text>
         </Pressable>
       </View>
@@ -36,6 +36,7 @@ export function PlayerScreen() {
       <View style={styles.controls}>
         <PlayPauseButton />
         <ProgressBar />
+        <ResyncControls />
       </View>
     </View>
   );
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   topBar: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   link: {
     color: '#2563eb',
