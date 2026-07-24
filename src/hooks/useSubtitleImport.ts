@@ -1,26 +1,11 @@
 import { useCallback } from 'react';
 import { useAppDispatch } from '../store/hooks';
-import { setMedia, setSubtitles } from '../store/slices/playbackSlice';
-import { requestMediaLibraryPermission } from '../services/permissions';
-import { pickMediaFile, pickSubtitleFile } from '../services/filePicker';
+import { setSubtitles } from '../store/slices/playbackSlice';
+import { pickSubtitleFile } from '../services/filePicker';
 import { detectSubtitleFormat, parseSubtitles } from '../subtitles';
 
-export function useFileImport() {
+export function useSubtitleImport() {
   const dispatch = useAppDispatch();
-
-  const importMedia = useCallback(async () => {
-    const granted = await requestMediaLibraryPermission();
-    if (!granted) {
-      throw new Error('Media permission was denied');
-    }
-
-    const file = await pickMediaFile();
-    if (!file) {
-      return;
-    }
-
-    dispatch(setMedia({ uri: file.uri }));
-  }, [dispatch]);
 
   const importSubtitles = useCallback(async () => {
     const file = await pickSubtitleFile();
@@ -38,5 +23,5 @@ export function useFileImport() {
     dispatch(setSubtitles({ uri: file.uri, cues }));
   }, [dispatch]);
 
-  return { importMedia, importSubtitles };
+  return { importSubtitles };
 }
