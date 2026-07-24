@@ -1,0 +1,20 @@
+1
+00:00:00,500 --> 00:00:03,000
+Hello, and welcome to SubbyView.
+
+2
+00:00:03,500 --> 00:00:06,000
+This is a sample subtitle file
+for manual testing on the emulator.
+
+3
+00:00:06,500 --> 00:00:09,000
+It contains a few short lines,
+
+4
+00:00:09,500 --> 00:00:12,000
+timed a few seconds apart.
+
+5
+00:00:12,500 --> 00:00:15,000
+Enjoy testing the player!
