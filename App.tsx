@@ -11,8 +11,8 @@ import { ImportScreen } from './src/screens/ImportScreen';
 import { PlayerScreen } from './src/screens/PlayerScreen';
 
 function RootScreen() {
-  const mediaUri = useAppSelector(state => state.playback.mediaUri);
-  return mediaUri ? <PlayerScreen /> : <ImportScreen />;
+  const subtitleUri = useAppSelector(state => state.playback.subtitleUri);
+  return subtitleUri ? <PlayerScreen /> : <ImportScreen />;
 }
 
 function App() {
