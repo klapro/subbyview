@@ -9,3 +9,7 @@ export function selectActiveCue(state: RootState): SubtitleCue | null {
     ) ?? null
   );
 }
+
+export function selectTotalDurationMs(state: RootState): number {
+  return state.playback.cues.reduce((max, cue) => Math.max(max, cue.endMs), 0);
+}
