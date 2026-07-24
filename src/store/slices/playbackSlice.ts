@@ -23,11 +23,14 @@ const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
-    setMedia(state, action: PayloadAction<{ uri: string; durationMs: number }>) {
+    setMedia(state, action: PayloadAction<{ uri: string }>) {
       state.mediaUri = action.payload.uri;
-      state.durationMs = action.payload.durationMs;
+      state.durationMs = 0;
       state.currentTimeMs = 0;
       state.isPlaying = false;
+    },
+    setDuration(state, action: PayloadAction<number>) {
+      state.durationMs = action.payload;
     },
     setSubtitles(
       state,
@@ -55,6 +58,14 @@ const playbackSlice = createSlice({
   },
 });
 
-export const { setMedia, setSubtitles, play, pause, stop, seek, tick } =
-  playbackSlice.actions;
+export const {
+  setMedia,
+  setDuration,
+  setSubtitles,
+  play,
+  pause,
+  stop,
+  seek,
+  tick,
+} = playbackSlice.actions;
 export default playbackSlice.reducer;
