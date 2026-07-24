@@ -3,12 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { seek } from '../store/slices/playbackSlice';
+import { selectTotalDurationMs } from '../store/selectors';
 import { formatTime } from '../utils/formatTime';
 
 export function ProgressBar() {
   const dispatch = useAppDispatch();
   const currentTimeMs = useAppSelector(state => state.playback.currentTimeMs);
-  const durationMs = useAppSelector(state => state.playback.durationMs);
+  const durationMs = useAppSelector(selectTotalDurationMs);
   const [seekingValue, setSeekingValue] = useState<number | null>(null);
 
   const displayedTimeMs = seekingValue ?? currentTimeMs;
