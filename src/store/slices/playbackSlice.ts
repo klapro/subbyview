@@ -2,42 +2,31 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SubtitleCue } from '../../types/subtitle';
 
 export interface PlaybackState {
-  mediaUri: string | null;
   subtitleUri: string | null;
   cues: SubtitleCue[];
   isPlaying: boolean;
   currentTimeMs: number;
-  durationMs: number;
 }
 
 const initialState: PlaybackState = {
-  mediaUri: null,
   subtitleUri: null,
   cues: [],
   isPlaying: false,
   currentTimeMs: 0,
-  durationMs: 0,
 };
 
 const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
-    setMedia(state, action: PayloadAction<{ uri: string }>) {
-      state.mediaUri = action.payload.uri;
-      state.durationMs = 0;
-      state.currentTimeMs = 0;
-      state.isPlaying = false;
-    },
-    setDuration(state, action: PayloadAction<number>) {
-      state.durationMs = action.payload;
-    },
     setSubtitles(
       state,
       action: PayloadAction<{ uri: string; cues: SubtitleCue[] }>,
     ) {
       state.subtitleUri = action.payload.uri;
       state.cues = action.payload.cues;
+      state.currentTimeMs = 0;
+      state.isPlaying = false;
     },
     play(state) {
       state.isPlaying = true;
@@ -58,14 +47,6 @@ const playbackSlice = createSlice({
   },
 });
 
-export const {
-  setMedia,
-  setDuration,
-  setSubtitles,
-  play,
-  pause,
-  stop,
-  seek,
-  tick,
-} = playbackSlice.actions;
+export const { setSubtitles, play, pause, stop, seek, tick } =
+  playbackSlice.actions;
 export default playbackSlice.reducer;
