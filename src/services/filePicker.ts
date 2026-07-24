@@ -5,18 +5,6 @@ export interface PickedFile {
   name: string;
 }
 
-export async function pickMediaFile(): Promise<PickedFile | null> {
-  try {
-    const [result] = await pick({ type: [types.video, types.audio] });
-    return { uri: result.uri, name: result.name ?? 'media' };
-  } catch (error) {
-    if (isErrorWithCode(error) && error.code === errorCodes.OPERATION_CANCELED) {
-      return null;
-    }
-    throw error;
-  }
-}
-
 const SUBTITLE_EXTENSIONS = ['.srt', '.vtt', '.ass', '.ssa'];
 
 export async function pickSubtitleFile(): Promise<PickedFile | null> {
